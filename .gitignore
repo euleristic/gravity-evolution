@@ -30,4 +30,7 @@
 *.exe
 *.out
 *.app
+
+# Additional ignores
 /.vs/gravity_evolution
+*.sln
