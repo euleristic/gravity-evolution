@@ -6,8 +6,8 @@
 
 namespace euleristic {
 	constexpr size_t star_count = 1024;
-	constexpr float spawn_range = 2.0f;
-	constexpr float velocity_range = 5.0f;
+	constexpr float spawn_range = 10.0f;
+	constexpr float velocity_range = 0.0f;
 	constexpr int spawn_precision = 5000;
 	constexpr float max_velocity = 10.f;
 
@@ -25,7 +25,7 @@ namespace euleristic {
 		1.0, 0.0, 0.0, 0.0,
 		0.0, 1.0, 0.0, 0.0,
 		0.0, 0.0, 1.0, 0.0,
-		0.0, 0.0, -5.0, 1.0);
+		0.0, 0.0, -50.0, 1.0);
 	constexpr glm::vec3 right(1.0f, 0.0f, 0.0f);
 	constexpr glm::vec3 left(-1.0f, 0.0f, 0.0f);
 	constexpr glm::vec3 up(0.0f, 1.0f, 0.0f);

@@ -20,22 +20,22 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="constants.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
+    <None Include="vertex_shader.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="fragment_shader.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
     <ClInclude Include="gl_wrapper.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="gravitational_system.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="fragment_shader.glsl">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="vertex_shader.glsl">
-      <Filter>Resource Files</Filter>
-    </None>
+    <ClInclude Include="constants.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
