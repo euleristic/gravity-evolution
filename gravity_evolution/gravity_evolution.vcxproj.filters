@@ -34,7 +34,10 @@
     <None Include="fragment_shader.glsl">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="vertex_shader.glsl">
+    <None Include="vertex_shader_float.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="vertex_shader_double.glsl">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>

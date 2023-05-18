@@ -1,38 +1,59 @@
 // This file contains the definitions for all constants used in the program
+// See this as a config file, feel free to mess around and vary the independent values!
 
 #pragma once
 #include <chrono>
+#include <cmath>
+#include "gl_wrapper.hpp"
 #include "glm/glm.hpp"
 
 namespace euleristic {
-	constexpr size_t star_count = 1024;
-	constexpr float spawn_range = 10.0f;
-	constexpr float velocity_range = 0.0f;
-	constexpr int spawn_precision = 5000;
-	constexpr float max_velocity = 10.f;
 
-	constexpr float conversion_factor = spawn_range / static_cast<float>(spawn_precision);
-	constexpr float max_velocity_sqr = max_velocity * max_velocity;
+	using component_type = float; // float or double supported
+
+	using vec3_t = glm::vec<3, component_type>;
+	using vec4_t = glm::vec<4, component_type>;
+	using mat4_t = glm::mat<4, 4, component_type>;
+
+	constexpr size_t star_count = 2048;
+	constexpr component_type spawn_range = 30.0;
+	constexpr component_type velocity_range = 3.0;
 
 	constexpr int width = 1024;
 	constexpr int height = 1024;
 
 	using namespace std::chrono_literals;
-	constexpr std::chrono::duration<float> delta_time = 20.0ms;
-	constexpr float gravitational_constant = 0.01f;
+	constexpr std::chrono::duration<component_type> delta_time = 20.0ms;
+	constexpr component_type gravitational_constant = 0.10;
 
-	constexpr glm::mat4 view(
+	constexpr size_t additional_thread_count = 4;
+
+	constexpr mat4_t camera_translation(
 		1.0, 0.0, 0.0, 0.0,
 		0.0, 1.0, 0.0, 0.0,
 		0.0, 0.0, 1.0, 0.0,
-		0.0, 0.0, -50.0, 1.0);
-	constexpr glm::vec3 right(1.0f, 0.0f, 0.0f);
-	constexpr glm::vec3 left(-1.0f, 0.0f, 0.0f);
-	constexpr glm::vec3 up(0.0f, 1.0f, 0.0f);
-	constexpr glm::vec3 down(0.0f, -1.0f, 0.0f);
-	constexpr glm::vec3 forward(0.0f, 0.0f, 1.0f);
-	constexpr glm::vec3 backward(0.0f, 0.0f, -1.0f);
-	constexpr float yaw_speed = 1.0f;
-	constexpr float pitch_speed = 1.0f;
-	constexpr float roll_speed = 1.0f;
+		0.0, 0.0, -100.0, 1.0);
+	constexpr vec3_t right(1.0, 0.0, 0.0);
+	constexpr vec3_t left(-1.0, 0.0, 0.0);
+	constexpr vec3_t up(0.0, 1.0, 0.0);
+	constexpr vec3_t down(0.0, -1.0, 0.0);
+	constexpr vec3_t forward(0.0, 0.0, -1.0);
+	constexpr vec3_t backward(0.0, 0.0, 1.0);
+	constexpr component_type rotation_speed = 1.0;
+	constexpr component_type translation_speed = 10.0;
+
+	// Don't touch:
+
+	constexpr size_t chunk_size = star_count / additional_thread_count;
+	constexpr size_t remainder_index = additional_thread_count * chunk_size;
+
+	constexpr GLenum gl_type_rep() noexcept {
+		if constexpr (std::same_as<component_type, float>) return GL_FLOAT;
+		else if constexpr (std::same_as < component_type, double>) return GL_DOUBLE;
+	}
+
+	constexpr component_type delta_g = delta_time.count() * gravitational_constant;
+	constexpr component_type delta_rotation = delta_time.count() * rotation_speed;
+	constexpr component_type delta_translation = delta_time.count() * translation_speed;
+
 }

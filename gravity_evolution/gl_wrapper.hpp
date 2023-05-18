@@ -7,10 +7,12 @@
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtc/type_ptr.hpp"
+#include "GL/glext.h"
 
 #include <memory>
 #include <filesystem>
 #include <fstream>
+#include <concepts>
 
 #ifdef _DEBUG
 #include <iostream>
@@ -37,11 +39,20 @@ namespace euleristic {
 		};
 
 		// GLFW window of scoped lifetime factory, throws if glfwCreateWindow returns nullptr
+		template <std::floating_point component_type>
 		static scope_based_window create_scoped_window(int width, int height, const char* const title) {
 
 			// Set window hints
-			glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-			glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+			if constexpr (std::same_as<component_type, float>) {
+				// Version can be older
+				glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+				glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+			}
+			else if constexpr (std::same_as<component_type, double>) {
+				// Necessary GL version for double support
+				glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+				glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
+			}
 			glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 			// Set window to not be resizable
@@ -53,7 +64,7 @@ namespace euleristic {
 
 			if (!window) {
 				WRITE_TO_CERR("Failed to initialize glfw\n");
-				throw glfwGetError(nullptr);
+				throw glGetError();
 			}
 
 			return std::move(window);
@@ -217,6 +228,9 @@ namespace euleristic {
 			void set(const uniform_type& value) noexcept {
 				if constexpr (std::same_as<uniform_type, glm::mat4>) {
 					glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(value));
+				}
+				else if constexpr (std::same_as<uniform_type, glm::dmat4>) {
+					glUniformMatrix4dv(location, 1, GL_FALSE, glm::value_ptr(value));
 				}
 			}
 		};
