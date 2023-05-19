@@ -10,4 +10,4 @@ This program simulates a set of bodies under newtonian gravity. The bodies are a
 
 ## How to Use
 Use WASD for camera yaw and pitch, and QE for roll. Arrow keys along with right control and shift translates the system.
-Vary the independent values in constants.hpp as you please!
+Vary the independent values in constants.hpp as you please! For a smooth simulation, frame busy time should stay below detla_time. Add more threads and adjust the star count if needed!
