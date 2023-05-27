@@ -19,8 +19,6 @@ int main() {
 			WRITE_TO_CERR("Failed to initialize GLAD\n");
 			return -1;
 		}
-		int major, minor, revision;
-		glfwGetVersion(&major, &minor, &revision);
 
 		glViewport(0, 0, width, height);
 
