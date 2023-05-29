@@ -78,6 +78,10 @@ namespace euleristic {
 				glGenBuffers(1, &id);
 			}
 
+			~vertex_buffer() noexcept {
+				glDeleteBuffers(1, &id);
+			}
+
 			vertex_buffer(std::floating_point auto* buffer_data, size_t buffer_size) noexcept {
 				glGenBuffers(1, &id);
 				set(buffer_data, buffer_size);
@@ -240,6 +244,10 @@ namespace euleristic {
 		public:
 			vertex_array() noexcept {
 				glGenVertexArrays(1, &id);
+			}
+
+			~vertex_array() noexcept {
+				glDeleteVertexArrays(1, &id);
 			}
 
 			void bind() noexcept {
