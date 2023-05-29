@@ -89,7 +89,7 @@ namespace euleristic {
 
 			void set(std::floating_point auto* buffer_data, size_t buffer_size) noexcept {
 				bind();
-				glBufferData(GL_ARRAY_BUFFER, buffer_size * sizeof(buffer_data), buffer_data, GL_STATIC_DRAW);
+				glBufferData(GL_ARRAY_BUFFER, buffer_size * sizeof(*buffer_data), buffer_data, GL_DYNAMIC_DRAW);
 			}
 		};
 
